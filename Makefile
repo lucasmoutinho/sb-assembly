@@ -16,5 +16,5 @@ exec:
 	./test
 
 clear:
-	rm *o
+	rm test.o
 	rm test
