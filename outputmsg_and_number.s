@@ -9,12 +9,18 @@ blank db "", 0DH, 0AH
 size_blank equ $-blank
 msg_output db "Escreva uma frase:", 0DH, 0AH
 size_msg_output equ $-msg_output
-times_msg db "Quantas vezes vc quer que sua mensagem apareça?", 0DH, 0AH
-size_times_msg equ $-times_msg
+
+
 
 section .text
 _start:
 
+; Guarda numero da sorte na pilha
+
+mov eax, 7
+push eax
+mov eax, 8
+push eax
 
 ; Imprime mensagem de introdução
 
@@ -32,32 +38,6 @@ mov ecx, msg_input
 mov edx, 10
 int 80h
 
-; Imprime mensagem de times
-
-mov eax, 4
-mov ebx, 1
-mov ecx, times_msg
-mov edx, size_times_msg
-int 80h
-
-; Recolhe number
-mov eax, 3
-mov ebx, 0
-mov ecx, number
-mov edx, 1
-int 80h
-
-; Prepara o loop
-
-mov ecx, 0
-mov cl, [number]
-sub cl, '0'
-
-; Faz o loop usando a instrução loop
-
-display:
-push ecx
-
 ; Escreve a mensagem do usuario
 
 mov eax, 4
@@ -66,16 +46,36 @@ mov ecx, msg_input
 mov edx, 10
 int 80h
 
-pop ecx
-loop display
+mov eax, 4
+mov ebx, 1
+mov ecx, blank
+mov edx, size_blank
+int 80h
 
-; Finaliza o programa
+; Retira numero da sorte da pilha
+
+pop eax
+pop eax
+
+
+; Imprime numero
+
+mov ecx, eax
+add cl, '0'
+mov [number], cl
+mov eax, 4
+mov ebx, 1
+mov ecx, number
+mov edx, 1
+int 80h
 
 mov eax, 4
 mov ebx, 1
 mov ecx, blank
 mov edx, size_blank
 int 80h
+
+; Finaliza o programa
 
 mov eax, 1
 mov ebx, 0
