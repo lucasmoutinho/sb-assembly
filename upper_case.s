@@ -1,7 +1,7 @@
 global _start
 
 section .data
-snippet db 'KANGOROO', 'CACHORRA', 0DH, 0AH
+snippet db 'cachorra', 0DH, 0AH
 size_snippet equ $-snippet
 
 section .text
@@ -17,7 +17,7 @@ mov ebx, snippet
 mov eax, size_snippet
 sub eax, 2
 
-DoMore: add byte [ebx], 32
+DoMore: sub byte [ebx], 32
 inc ebx
 dec eax
 jnz DoMore
