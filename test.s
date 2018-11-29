@@ -43,7 +43,7 @@ mov ebp, esp
 push edx
 push eax
 mov edx, 0
-mov edx, [ebp + 12]
+mov eax, [ebp + 12]
 imul dword [ebp + 8]
 mov [ebp + 16], eax
 mov [ebp + 20], edx
